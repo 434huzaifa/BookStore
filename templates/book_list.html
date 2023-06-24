@@ -10,14 +10,14 @@
     text-decoration: none;
   }
 </style>
-<a type="button" class="btn btn-primary position-relative " href="{% url 'Cart' %}">
+<a type="button" class="btn btn-primary position-relative float-end" href="{% url 'Cart' %}" style="margin-right: 20px;margin-top: 20px;">
   Cart
   <span id="cart" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
     99+
     <span class="visually-hidden">unread messages</span>
   </span>
 </a>
-<div class="row row-cols-auto"></div>
+<div class="row row-cols-auto "></div>
 
 <script>
 
@@ -39,23 +39,26 @@
         var storedArray = JSON.parse(sessionStorage.getItem("items"))
         for (let index = 0; index < data.length; index++) {
           var flag = true;
-
-          for (let j = 0; j < storedArray.length; j++) {
-            if (storedArray[j] == data[index]['id']) {
-              flag = false;
-              console.log(data[index]['id']);
-              break;
+          if (storedArray !=null  ) {
+            for (let j = 0; j < storedArray.length; j++) {
+              if (storedArray[j] == data[index]['id']) {
+                flag = false;
+                console.log(data[index]['id']);
+                break;
+              }
             }
           }
+
           if (flag) {
             card += '<a id ="' + data[index]['id'] + '" class="hyperlink" href="http://127.0.0.1:8000/book-details/' + data[index]['id'] + '"><div class="col" id ="' + data[index]['id'] + '" style="margin-top:20px"><div class="card" style="width: 18rem;height:22rem">'
             card += '<ul class="list-group list-group-flush">'
-            card += '<li class="list-group-item"><h4><strong>' + data[index]['title'] + '</strong></h4></li>'
+              tt=String(data[index]['title']).substring(0,20)
+            card += '<li class="list-group-item"><h4><strong>' + tt + '...</strong></h4></li>'
             card += '<li class="list-group-item">' + data[index]['author'] + '</li>'
             syn = String(data[index]['synopsis']).substring(0, 120)
             card += '<li class="list-group-item">' + syn + '...</li>'
             card += '<li class="list-group-item"><strong>$' + data[index]['price'] + '</strong></li>'
-            card += '</a><li class="list-group-item"><button id="' + data[index]['id'] + '" onclick="addtocart(this.id)" class="btn btn-primary">Add</button></li></ul>'
+            card += '</a><li class="list-group-item"><button id="' + data[index]['id'] + '" onclick="addtocart(this.id)" class="btn btn-primary btn-lg">Add</button></li></ul>'
             card += '</div></div>'
 
           }

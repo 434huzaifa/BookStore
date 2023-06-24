@@ -13,3 +13,6 @@ def cart(request):
 
 def create_book(request):
     return render(request,'create_book.html')
+
+def order_submited(request):
+    return render(request,'ordersubmit.html')

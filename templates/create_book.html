@@ -24,7 +24,7 @@
         </div>
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Price</label>
-            <input type="number" name="price" class="form-control" id="exampleFormControlInput1">
+            <input type="number" name="price" step="0.01" class="form-control" id="exampleFormControlInput1">
         </div>
 
         <input id="form_button" class="btn btn-outline-primary btn-lg" style="margin-top: 20px;" type="submit"
@@ -44,11 +44,12 @@
             $.post(baseURL,deta,function(data,status){
                 console.log(data,status)
             })
+            window.location='/'
         }
 
         const form = document.querySelector('form');
         form.addEventListener('submit', handleSubmit);
-
+        
     </script>
 </div>
 {% endblock body %}

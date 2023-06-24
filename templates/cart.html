@@ -26,7 +26,7 @@
     </table>
   </div>
 
-  <form method="post" class="container">
+  <form method="post" class="container" action="{% url 'Order Submited' %}">
     <div class="form-floating mb-3">
         <input type="text" class="form-control" id="floatingInput">
         <label for="floatingInput">Full Name</label>
@@ -36,7 +36,7 @@
         <label for="floatingInput">Email address</label>
       </div>
       <div class="form-floating mb-3">
-        <input type="tel" class="form-control" id="floatingInput">
+        <input type="number" class="form-control" id="floatingInput">
         <label for="floatingInput">Phone Number</label>
       </div>
       <div class="form-floating">
@@ -49,7 +49,7 @@
             Cash on delivery
         </label>
       </div>
-      <input id="form_button" class="btn btn-outline-primary btn-lg" type="button" value="Submit" style="margin-top: 20px;">
+      <input id="form_button" class="btn btn-outline-primary btn-lg" onclick="window.sessionStorage.clear()" type="Submit" value="Submit" style="margin-top: 20px;">
   </form>
 
 <script>
