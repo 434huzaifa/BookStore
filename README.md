@@ -1,5 +1,5 @@
 # BookStore
 
 ### Superuser
-username: huzaifa
-pass: a
+- username: huzaifa
+- pass: a
