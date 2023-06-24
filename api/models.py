@@ -8,7 +8,6 @@ class Book(models.Model):
     author=CharField(max_length=30,null=False,blank=False)
     synopsis=TextField(blank=True,null=True)
     isbn=IntegerField(unique=True)
-    image=ImageField(blank=True,null=True,upload_to='book_cover')
     price=FloatField()
     
     def __str__(self):

@@ -11,4 +11,4 @@ urlpatterns=[
     path('update-book/<str:pk>/',update_book,name='Update Book'),
     path('delete-book/<str:pk>/',delete_book,name='Delete Book'),
 ]
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

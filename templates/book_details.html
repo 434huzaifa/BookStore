@@ -1,0 +1,56 @@
+{% include 'base.html' %}
+
+{% block title %}
+  <title>Book Details</title>
+{% endblock title %}
+{% block body %}
+<style>
+    td{
+        text-align: left;
+    }
+</style>
+<div class="table-responsive container" style="text-align: center;margin-top: 20px;">
+    <table class="table-primary table-bordered">
+       <tbody>
+        <tr>
+            <td ><strong>Title</strong></td>
+            <td id="title"></td>
+        </tr>
+        <tr>
+            <td ><strong>Author</strong></td>
+            <td id="author"></td>
+        </tr>
+        <tr>
+            <td ><strong>Synopsis</strong></td>
+            <td id="synopsis"></td>
+        </tr>
+        <tr>
+            <td ><strong>ISBN</strong></td>
+            <td id="isbn"></td>
+        </tr>
+        <tr>
+            <td ><strong>Price</strong></td>
+            <td id="price"></td>
+        </tr>
+       </tbody>
+    </table>
+  </div>
+<script>
+    
+    $(document).ready(function(){
+        var baseURL="http://127.0.0.1:8000/api/book-details/{{pk}}"
+        $.get(baseURL,function(data,status){
+            console.log(data,status);
+            card="";
+            if (status=='success') {
+                $("#title").html(data['title'])
+                $("#author").html(data['author'])
+                $("#synopsis").html(data['synopsis'])
+                $("#isbn").html(data['isbn'])
+                $("#price").html("$"+data['price'])
+            }
+            
+        });
+    });
+</script>
+{% endblock body %}
