@@ -7,11 +7,11 @@ from .models import Book
 @api_view(['GET'])
 def overview(request):
     urls={
-        'book_list':'/book-list/',
-        'book_details':'/book-details/<str:pk>/',
-        'create_book':'/create-book/',
-        'update_book':'/update-book/<str:pk>/',
-        'delete_book':'/delete-book/<str:pk>/'
+        'book_list':'book-list/',
+        'book_details':'book-details/<str:pk>/',
+        'create_book':'create-book/',
+        'update_book':'update-book/<str:pk>/',
+        'delete_book':'delete-book/<str:pk>/'
     }
     return Response(urls)
 
@@ -29,9 +29,11 @@ def book_details(request,pk):
 
 @api_view(['post'])
 def create_book(request):
+   
     serializer=BookSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
+        print(request.data)
         return Response(serializer.data)
     return Response(serializer.errors)
 
