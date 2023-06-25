@@ -49,7 +49,7 @@
             Cash on delivery
         </label>
       </div>
-      <input id="form_button" class="btn btn-outline-primary btn-lg" onclick="window.sessionStorage.clear()" type="Submit" value="Submit" style="margin-top: 20px;">
+      <input id="form_button" class="btn btn-outline-primary btn-lg" onclick="window.localStorage.clear()" type="Submit" value="Submit" style="margin-top: 20px;">
   </form>
 
 <script>
@@ -57,7 +57,7 @@
     $(document).ready(function () {
         var baseURL = "http://127.0.0.1:8000/api/book-list/"
         $.get(baseURL, function (data, status) {
-            var storedArray = JSON.parse(sessionStorage.getItem("items"))
+            var storedArray = JSON.parse(localStorage.getItem("items"))
             console.log(storedArray)
             if (storedArray.length==0) {
                 document.getElementById("form_button").disabled = true;
@@ -95,7 +95,7 @@
     });
     function deletefromcart(id){
         console.log(id)
-        var storedArray = JSON.parse(sessionStorage.getItem("items"))
+        var storedArray = JSON.parse(localStorage.getItem("items"))
         var itemarray=new Array();
         for (let index = 0; index < storedArray.length; index++) {
             if (storedArray[index]!=id) {
@@ -103,7 +103,7 @@
             }
           
         }
-        window.sessionStorage.setItem("items", JSON.stringify(itemarray));
+        window.localStorage.setItem("items", JSON.stringify(itemarray));
         
         var tprice=parseFloat(document.getElementById("tprice").innerHTML)
         var price=parseFloat(document.getElementById(id).getElementsByTagName('td')[2].innerHTML)
@@ -116,7 +116,7 @@
         }
         $("#tprice").html(nowprice)
         byebye(id)
-        var storedArray = JSON.parse(sessionStorage.getItem("items"))
+        var storedArray = JSON.parse(localStorage.getItem("items"))
         console.log(storedArray)
 
     }

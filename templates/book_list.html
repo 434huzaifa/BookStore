@@ -13,7 +13,7 @@
 <a type="button" class="btn btn-primary position-relative float-end" href="{% url 'Cart' %}" style="margin-right: 20px;margin-top: 20px;">
   Cart
   <span id="cart" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-    99+
+    0
     <span class="visually-hidden">unread messages</span>
   </span>
 </a>
@@ -22,7 +22,7 @@
 <script>
 
   function fixtcurt() {
-    var storedArray = JSON.parse(sessionStorage.getItem("items"))
+    var storedArray = JSON.parse(localStorage.getItem("items"))
     if (storedArray == null) {
       $("#cart").html('')
     } else {
@@ -36,7 +36,7 @@
       console.log(data, status);
       card = "";
       if (status == 'success') {
-        var storedArray = JSON.parse(sessionStorage.getItem("items"))
+        var storedArray = JSON.parse(localStorage.getItem("items"))
         for (let index = 0; index < data.length; index++) {
           var flag = true;
           if (storedArray !=null  ) {
@@ -69,7 +69,7 @@
     });
   });
   function addtocart(id) {
-    var storedArray = JSON.parse(sessionStorage.getItem("items"))
+    var storedArray = JSON.parse(localStorage.getItem("items"))
     var itemarray = new Array();
     if (storedArray == null) {
       itemarray.push(id);
@@ -82,7 +82,7 @@
       }
 
     }
-    window.sessionStorage.setItem("items", JSON.stringify(itemarray));
+    window.localStorage.setItem("items", JSON.stringify(itemarray));
     fixtcurt()
     byebye(id)
 
