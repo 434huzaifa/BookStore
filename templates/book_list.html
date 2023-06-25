@@ -6,8 +6,8 @@
 
 {% block body %}
 <style>
-  .hyperlink {
-    text-decoration: none;
+  .hoveer {
+    cursor: pointer;
   }
 </style>
 <a type="button" class="btn btn-primary position-relative float-end" href="{% url 'Cart' %}" style="margin-right: 20px;margin-top: 20px;">
@@ -50,15 +50,30 @@
           }
 
           if (flag) {
-            card += '<a id ="' + data[index]['id'] + '" class="hyperlink" href="http://127.0.0.1:8000/book-details/' + data[index]['id'] + '"><div class="col" id ="' + data[index]['id'] + '" style="margin-top:20px"><div class="card" style="width: 18rem;height:22rem">'
-            card += '<ul class="list-group list-group-flush">'
-              tt=String(data[index]['title']).substring(0,20)
-            card += '<li class="list-group-item"><h4><strong>' + tt + '...</strong></h4></li>'
-            card += '<li class="list-group-item">' + data[index]['author'] + '</li>'
-            syn = String(data[index]['synopsis']).substring(0, 120)
-            card += '<li class="list-group-item">' + syn + '...</li>'
-            card += '<li class="list-group-item"><strong>$' + data[index]['price'] + '</strong></li>'
-            card += '</a><li class="list-group-item"><button id="' + data[index]['id'] + '" onclick="addtocart(this.id)" class="btn btn-primary btn-lg">Add</button></li></ul>'
+            id=data[index]['id']
+            card += '<div class="col hoveer" id ="' + id + '" style="margin-top:20px" ><div class="card" style="width: 25rem;">';
+            card += '<ul class="list-group list-group-flush" onclick="hyper('+id+')">';
+              
+              tt=String(data[index]['title']).split(' ');
+              tt=tt[0]+' '+tt[1];
+            card += '<li class="list-group-item text-break"><h4><strong>' + tt + '...</strong></h4></li>';
+            card += '<li class="list-group-item">' + data[index]['author'] + '</li>';
+            
+            syn = String(data[index]['synopsis']);
+            console.log(syn.length)
+            if (syn.length>120) {
+              syn=String(syn).substring(0,120);
+              syn+='...'
+            }else if(syn.length<120){
+              var len=120-syn.length;
+              syn=syn+'&nbsp'.repeat(len)
+
+            }
+            
+
+            card += '<li class="list-group-item ">'+syn+'</li>';
+            card += '<li class="list-group-item"><strong>$' + data[index]['price'] + '</strong></li></ul>';
+            card += '<button id="' + id + '" onclick="addtocart(this.id)" class="btn btn-primary ">Add</button>';
             card += '</div></div>'
 
           }
@@ -88,5 +103,8 @@
 
   }
 
+  function hyper(id){
+    window.location='/book-details/'+id
+  }
 </script>
 {% endblock body %}

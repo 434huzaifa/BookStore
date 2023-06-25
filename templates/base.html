@@ -40,14 +40,10 @@
   <script>
     
     function byebye(id) {
-      $("#" + id).fadeOut("normal", function () {
+      $("#" + id).fadeOut("fast", function () {
         $(this).remove();
       });
-      setTimeout(function () {
-        $("#" + id).fadeOut("normal", function () {
-          $(this).remove();
-        });
-      }, 500);
+
     }
   </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"

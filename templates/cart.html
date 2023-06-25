@@ -28,19 +28,19 @@
 
   <form method="post" class="container" action="{% url 'Order Submited' %}">
     <div class="form-floating mb-3">
-        <input type="text" class="form-control" id="floatingInput">
+        <input type="text" class="form-control" id="floatingInput" required>
         <label for="floatingInput">Full Name</label>
       </div>
       <div class="form-floating mb-3">
-        <input type="email" class="form-control" id="floatingInput">
+        <input type="email" class="form-control" id="floatingInput" required>
         <label for="floatingInput">Email address</label>
       </div>
       <div class="form-floating mb-3">
-        <input type="number" class="form-control" id="floatingInput">
+        <input type="number" class="form-control" id="floatingInput" required>
         <label for="floatingInput">Phone Number</label>
       </div>
       <div class="form-floating">
-        <textarea class="form-control" id="floatingTextarea"></textarea>
+        <textarea class="form-control" id="floatingTextarea" required></textarea>
         <label for="floatingTextarea">Address</label>
       </div>
       <div class="form-check">
@@ -59,7 +59,7 @@
         $.get(baseURL, function (data, status) {
             var storedArray = JSON.parse(localStorage.getItem("items"))
             console.log(storedArray)
-            if (storedArray.length==0) {
+            if (storedArray==null ||storedArray.length==0) {
                 document.getElementById("form_button").disabled = true;
                 $("tbody").html('<td colspan="4" rowspan="4" style="text-align:center">Cart Empty</td>')
             }else{
