@@ -6,52 +6,53 @@
 {% block body %}
 <div class="table-responsive container">
     <table class="table">
-      <thead>
-        <tr>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Price($)</th>
-            <th>Function</th>
-        </tr>
-      </thead>
-      <tbody>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Price($)</th>
+                <th>Function</th>
+            </tr>
+        </thead>
+        <tbody>
 
-      </tbody>
-      <tfoot>
-        <tr>
-            <td colspan="2" style="text-align: right;">Total Price</td>
-            <td ><strong id="tprice"></strong></td>
-        </tr>
-      </tfoot>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2" style="text-align: right;">Total Price</td>
+                <td><strong id="tprice"></strong></td>
+            </tr>
+        </tfoot>
     </table>
-  </div>
+</div>
 
-  <form method="post" class="container" action="{% url 'Order Submited' %}">
+<form method="post" class="container" action="{% url 'Order Submited' %}">
     {% csrf_token %}
     <div class="form-floating mb-3">
         <input type="text" class="form-control" id="floatingInput" required>
         <label for="floatingInput">Full Name</label>
-      </div>
-      <div class="form-floating mb-3">
+    </div>
+    <div class="form-floating mb-3">
         <input type="email" class="form-control" id="floatingInput" required>
         <label for="floatingInput">Email address</label>
-      </div>
-      <div class="form-floating mb-3">
+    </div>
+    <div class="form-floating mb-3">
         <input type="number" class="form-control" id="floatingInput" required>
         <label for="floatingInput">Phone Number</label>
-      </div>
-      <div class="form-floating">
+    </div>
+    <div class="form-floating">
         <textarea class="form-control" id="floatingTextarea" required></textarea>
         <label for="floatingTextarea">Address</label>
-      </div>
-      <div class="form-check">
+    </div>
+    <div class="form-check">
         <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
         <label class="form-check-label" for="flexRadioDefault2">
             Cash on delivery
         </label>
-      </div>
-      <input id="form_button" class="btn btn-outline-primary btn-lg" onclick="window.localStorage.clear()" type="Submit" value="Submit" style="margin-top: 20px;">
-  </form>
+    </div>
+    <input id="form_button" class="btn btn-outline-primary btn-lg" onclick="window.localStorage.clear()" type="Submit"
+        value="Submit" style="margin-top: 20px;">
+</form>
 
 <script>
 
@@ -60,58 +61,61 @@
         $.get(baseURL, function (data, status) {
             var storedArray = JSON.parse(localStorage.getItem("items"))
             console.log(storedArray)
-            if (storedArray==null ||storedArray.length==0) {
+            if (storedArray == null || storedArray.length == 0) {
                 document.getElementById("form_button").disabled = true;
                 $("tbody").html('<td colspan="4" rowspan="4" style="text-align:center">Cart Empty</td>')
-            }else{
+            } else {
                 card = "";
-            if (status == 'success') {
-                var sum=0;
-                for (let index = 0; index < data.length; index++) {
-                    var flag = false;
-                    
-                    for (let j = 0; j < storedArray.length; j++) {
-                        if (storedArray[j] == data[index]['id']) {
-                            flag=true;
-                            console.log(data[index]['id']);
-                            break;
-                        }
-                    }
-                    if (flag) {
-                        card+='<tr id="'+data[index]['id']+'"><td>'+data[index]['title']+'</td>'
-                        card+='<td>'+data[index]['author']+'</td>'
-                        card+='<td>'+data[index]['price']+'</td>'
-                        card+='<td><button class="btn btn-outline-danger" id="'+data[index]['id']+'"  type="button" onclick="deletefromcart(this.id)" >Delete</button></td></tr>'
-                        sum+=data[index]['price']
-                        
-                    }
+                if (status == 'success') {
+                    var sum = 0;
+                    for (let index = 0; index < data.length; index++) {
+                        var flag = false;
 
+                        for (let j = 0; j < storedArray.length; j++) {
+                            if (storedArray[j] == data[index]['id']) {
+                                flag = true;
+                                console.log(data[index]['id']);
+                                break;
+                            }
+                        }
+                        if (flag) {
+                            card += '<tr id="' + data[index]['id'] + '"><td>' + data[index]['title'] + '</td>'
+                            card += '<td>' + data[index]['author'] + '</td>'
+                            card += '<td>' + data[index]['price'] + '</td>'
+                            card += '<td><button class="btn btn-outline-danger" id="' + data[index]['id'] + '"  type="button" onclick="deletefromcart(this.id)" >Delete</button></td></tr>'
+                            sum += data[index]['price']
+
+                        }
+
+                    }
                 }
+                $("tbody").html(card)
+                $("#tprice").html(sum)
             }
-            $("tbody").html(card)
-            $("#tprice").html(sum)
-            }
-            
+
         });
     });
-    function deletefromcart(id){
+    function deletefromcart(id) {
         console.log(id)
         var storedArray = JSON.parse(localStorage.getItem("items"))
-        var itemarray=new Array();
-        for (let index = 0; index < storedArray.length; index++) {
-            if (storedArray[index]!=id) {
-                itemarray.push(storedArray[index])
+        var itemarray = new Array();
+        if (storedArray != null || storedArray.length != 0) {
+            for (let index = 0; index < storedArray.length; index++) {
+                if (storedArray[index] != id) {
+                    itemarray.push(storedArray[index])
+                }
+
             }
-          
         }
+
         window.localStorage.setItem("items", JSON.stringify(itemarray));
-        
-        var tprice=parseFloat(document.getElementById("tprice").innerHTML)
-        var price=parseFloat(document.getElementById(id).getElementsByTagName('td')[2].innerHTML)
-        var nowprice=tprice-price
-        console.log(nowprice,price,tprice)
-        if (nowprice<=0) {
-            nowprice=0
+
+        var tprice = parseFloat(document.getElementById("tprice").innerHTML)
+        var price = parseFloat(document.getElementById(id).getElementsByTagName('td')[2].innerHTML)
+        var nowprice = tprice - price
+        console.log(nowprice, price, tprice)
+        if (nowprice <= 0) {
+            nowprice = 0
             document.getElementById("form_button").disabled = true;
             $("tbody").html('<td colspan="4" rowspan="4" style="text-align:center">Cart Empty</td>')
         }

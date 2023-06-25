@@ -37,7 +37,7 @@
         <input id="form_button" class="btn btn-outline-primary btn-lg" style="margin-top: 20px;" type="submit"
             value="Save">
 
-
+            <p id="errors"></p>
     </form>
     {% else %}
 
@@ -73,8 +73,14 @@
             var baseURL = "/api/create-book/"
             $.post(baseURL, deta, function (data, status) {
                 console.log(data, status)
+                if(data['isbn']!='book with this isbn already exists.'){
+                    window.location = '{% url 'Book List' %}'
+                }else{
+                    $("#errors").html('book with this isbn already exists.')
+                }
+
             })  
-            window.location = '{% url 'Book List' %}'
+            
 
 
         }
