@@ -39,7 +39,7 @@
             const value = Object.fromEntries(data.entries());
             var deta = JSON.stringify(value)
             deta=JSON.parse(deta)
-            var baseURL="http://127.0.0.1:8000/api/create-book/"
+            var baseURL="/api/create-book/"
             console.log(deta)
             $.post(baseURL,deta,function(data,status){
                 console.log(data,status)
