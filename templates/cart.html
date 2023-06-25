@@ -27,6 +27,7 @@
   </div>
 
   <form method="post" class="container" action="{% url 'Order Submited' %}">
+    {% csrf_token %}
     <div class="form-floating mb-3">
         <input type="text" class="form-control" id="floatingInput" required>
         <label for="floatingInput">Full Name</label>

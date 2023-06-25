@@ -5,10 +5,17 @@
 {% endblock title %}
 {% block body %}
 <div class="container">
-    <form>
+    {% if request.user.is_authenticated %}
+    <button type="button" class="btn btn-danger position-relative" onclick="admin_logout()"
+        style="margin-right: 20px;margin-top: 20px;">
+        Logout
+    </button>
+
+    <form style="margin-top: 20px;">
+        {% csrf_token %}
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Title</label>
-            <input type="text" name="title" class="form-control" id="exampleFormControlInput1" maxlength="100" required> 
+            <input type="text" name="title" class="form-control" id="exampleFormControlInput1" maxlength="100" required>
         </div>
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Author</label>
@@ -16,7 +23,7 @@
         </div>
         <div class="mb-3">
             <label for="exampleFormControlTextarea1" class="form-label">Synopsis</label>
-            <textarea class="form-control" name="synopsis" id="exampleFormControlTextarea1" rows="3" ></textarea>
+            <textarea class="form-control" name="synopsis" id="exampleFormControlTextarea1" rows="3"></textarea>
         </div>
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">ISBN</label>
@@ -28,28 +35,94 @@
         </div>
 
         <input id="form_button" class="btn btn-outline-primary btn-lg" style="margin-top: 20px;" type="submit"
-            value="submit">
+            value="Save">
+
+
     </form>
+    {% else %}
+
+    <form>
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Admin Username</label>
+            <input type="text" class="form-control" name="username" id="exampleInputEmail1"
+                aria-describedby="emailHelp">
+
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Admin Password</label>
+            <input type="password" class="form-control" name="password" id="exampleInputPassword1">
+        </div>
+        <input id="form_button" class="btn btn-outline-primary btn-lg" style="margin-top: 20px;" type="submit"
+            value="submit">
+
+    </form>
+    <p id="errors"></p>
+    {% endif %}
     <script>
-        function handleSubmit(event) {
+
+        {% if request.user.is_authenticated %}
+        function handleSubmit(event, type) {
             event.preventDefault();
 
             const data = new FormData(event.target);
 
             const value = Object.fromEntries(data.entries());
             var deta = JSON.stringify(value)
-            deta=JSON.parse(deta)
-            var baseURL="/api/create-book/"
-            console.log(deta)
-            $.post(baseURL,deta,function(data,status){
-                console.log(data,status)
-            })
-            window.location='/'
-        }
+            deta = JSON.parse(deta)
+            var baseURL = "/api/create-book/"
+            $.post(baseURL, deta, function (data, status) {
+                console.log(data, status)
+            })  
+            window.location = '{% url 'Book List' %}'
 
+
+        }
         const form = document.querySelector('form');
         form.addEventListener('submit', handleSubmit);
-        
+
+        {% else %}
+
+        function handleSubmit(event) {
+            event.preventDefault();
+            const data = new FormData(event.target);
+
+            const value = Object.fromEntries(data.entries());
+            var deta = JSON.stringify(value)
+            deta = JSON.parse(deta)
+            console.log(deta)
+            var baseURL = "/api/admin-login/"
+            $.post(baseURL, deta, function (data, status) {
+                console.log(data, status)
+                if (status == 'success') {
+
+                    setTimeout(function () { window.location = '{% url 'Create Book' %}'; }, 1000)
+
+
+                }
+            }).fail(function () {
+                $("#errors").html('You are not a admin')
+            })
+
+        }
+        const form = document.querySelector('form');
+        form.addEventListener('submit', handleSubmit);
+
+
+
+        {% endif %}
+
+
+        function admin_logout(params) {
+            var baseURL = "{% url 'Admin Logout' %}"
+            $.get(baseURL, function (data, status) {
+                console.log(data, status)
+                window.location = "{% url 'Book List' %}"
+            })
+        }
+
+
+
     </script>
 </div>
 {% endblock body %}

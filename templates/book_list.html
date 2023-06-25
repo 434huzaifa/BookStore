@@ -55,8 +55,10 @@
             card += '<ul class="list-group list-group-flush" onclick="hyper('+id+')">';
               
               tt=String(data[index]['title']).split(' ');
-              tt=tt[0]+' '+tt[1];
-            card += '<li class="list-group-item text-break"><h4><strong>' + tt + '...</strong></h4></li>';
+              if(tt.length>1){
+                tt=tt[0]+' '+tt[1]+'...';
+              }
+            card += '<li class="list-group-item text-break"><h4><strong>' + tt + '</strong></h4></li>';
             card += '<li class="list-group-item">' + data[index]['author'] + '</li>';
             
             syn = String(data[index]['synopsis']);
