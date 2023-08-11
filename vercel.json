@@ -9,6 +9,11 @@
         {
             "src": "/(.*)",
             "dest": "Bookstore/wsgi.py"
+            
+        },
+        {
+            "src": "/static/(.*)",
+            "dest": "/static/$1"
         }
     ]
 }
