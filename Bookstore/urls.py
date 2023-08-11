@@ -13,3 +13,6 @@ urlpatterns = [
     path('create-book/',create_book,name='Create Book'),
     path('order-submited/',order_submited,name='Order Submited')
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

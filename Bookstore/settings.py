@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-+m3e4t)r1-em8q$iog25f!3-imy^n#9hv#2q-sjcpb9i62vu!3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ['*']
 # CSRF_TRUSTED_ORIGINS = ['https://lap-custody-cooper-participant.trycloudflare.com']
 
 # Application definition
@@ -79,12 +79,14 @@ WSGI_APPLICATION = 'Bookstore.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'verceldb',
+        'USER': 'default',
+        'PASSWORD': 'lB02cHbftaFM',
+        'HOST': "ep-billowing-mode-04071734-pooler.us-east-1.postgres.vercel-storage.com",
+        'PORT': '5432',
     }
 }
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -121,8 +123,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 import os
 
-STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = os.path.join(BASE_DIR, 'static')+"/"
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')+"/"
 
 
 # Default primary key field type
